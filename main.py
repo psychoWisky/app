@@ -1,13 +1,14 @@
 
 import json
-from fastapi import FastAPI 
+from fastapi import FastAPI , Path
 import requests
 
 
 testAPI = FastAPI()
 
-@testAPI.get("/requests")
+@testAPI.get("/")
 
-async def req(name:str):
-    url = requests.get(f"https://pokeapi.co/api/v2/evolution-chain/{name}/")
-    return [i["name"] for i in json.loads(url.text)]
+async def req(id: str , gt=0, lt=1011):
+    print(int(id))
+    url = requests.get(f"https://pokeapi.co/api/v2/pokemon-species/{id}/")
+    return json.loads(url.text)["name"]
